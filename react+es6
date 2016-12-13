@@ -1,0 +1,40 @@
+react  纯es6语法
+
+Import React,{Component } from ‘react’;
+class MyComponent extends Component{
+   constructor(props){
+  super(props);用来集成父组件的属性
+
+  this.state={定义默认的属性 要在constuctor里面定义  而不需要在 getInitialState里面定义
+  state1:’’,
+  state2:’’
+   }
+this.handleClick=this.handleClick.bind(this);
+    }
+ 定义内部的方法
+handleClick(){
+  console.log(this)  并且调用的时候必须使用 bind(this)或者箭头函数进行调用  或者在构造函数中绑定  或者在事件事件绑定的时候使用 ::进行绑定
+}
+
+render(){
+
+const {
+      className,
+      ...others,  // 从自己的属性值中找到所有的属性  并且找到属性中的className  那么 others是除了className以外的其他一切属性    } = this.props;
+
+return (
+<div  onClick={this.handleClick.bind(this)}  /*或者 onClick={::this.handleClick}*/>es6的创建组件方式</div>
+)
+}
+}
+
+es6的属性形式  和 默认值 都需要定义在组件的外部  而不是组件内部
+MyComponent.propTypes = {
+  nameProp: React.PropTypes.string
+};
+MyComponent.defaultProps = {
+  nameProp: ''
+};
+
+
+export default Test; 将组件报漏出去

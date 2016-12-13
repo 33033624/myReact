@@ -1,0 +1,56 @@
+一个高版本浏览器提供的获取数据信息 类似于ajax的方法
+fetch(URL路径).then(function(response){
+  console.log(response.headers.get('Content-Type'));
+        console.log(response.headers.get('Date'));
+        console.log(response.status);
+        console.log(response.statusText);
+        console.log(response.type);
+        console.log(response.url);
+获取到响应的数据信息部分的逻辑在这里面书写
+  if(response.status !== 200){
+  console.log(‘存在一个问题’)
+   return
+}
+response.json().then(function(data){
+     console.log(data);
+})
+}).catch(function(){
+  console.log(‘fetch  错误’)
+]
+}
+)
+
+function status(response){
+    if(response.status>=200 && response.status<300){
+        return Promise.resolve(response);
+    }
+    else{
+        return Promise.reject(new Error(response.statusText));
+    }
+}
+function json(response){
+    return response.json();   /json是返回的response提供的一个方法,会把返回的json字符串反序列化成对象,也被包装成一个Promise了
+
+}
+
+
+fetch(url，
+{
+    method:"post",  书写我们提交的方法
+    headers:{  书写我们的请求头
+        "Content-type":"application:/x-www-form-urlencoded:charset=UTF-8"
+    },
+ mode: "no-cors",  这个参数主要使用在跨域处理的时候
+    body:JSON.stringify({我们传递的数据
+      content: "留言内容"
+  })
+
+)
+.then(status)   status是我们上面已经 封装好的方法
+.then(json)     json也是我们上面已经封装好的方法
+.then(function(data){
+    console.log("请求成功，JSON解析后的响应数据为:",data);
+})
+.catch(function(err){  如果上面过程中出现错误会走catch方法
+    console.log("Fetch错误:"+err);
+});
